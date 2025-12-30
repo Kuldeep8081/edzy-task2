@@ -31,7 +31,6 @@ export default function Step2() {
   // Create the schema memoized with the current grade
   const schema = useMemo(() => createAcademicSchema(formData.grade), [formData.grade]);
 
-  // FIX: Remove <AcademicData> generic. Let RHF infer types from the resolver.
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -123,7 +122,8 @@ export default function Step2() {
                     type="number" 
                     placeholder="e.g. 15"
                     {...field} 
-                    value={field.value ?? ''}
+                    // FIX: Convert value to string to satisfy HTML input type requirements
+                    value={field.value?.toString() ?? ''}
                     onChange={e => field.onChange(e.target.value === '' ? 0 : Number(e.target.value))} 
                   />
                 </FormControl>
@@ -163,7 +163,8 @@ export default function Step2() {
                     type="number" 
                     placeholder="85" 
                     {...field} 
-                    value={field.value ?? ''}
+                    // FIX: Convert value to string to satisfy HTML input type requirements
+                    value={field.value?.toString() ?? ''}
                     onChange={e => field.onChange(e.target.value === '' ? 0 : Number(e.target.value))} 
                   />
                 </FormControl>

@@ -5,16 +5,19 @@ export const studentSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters").max(60).trim(),
   email: z.string().email("Invalid email address"),
   mobile: z.string().regex(/^[6-9]\d{9}$/, "Must be a valid 10-digit Indian mobile number"),
-  grade: z.enum(["9", "10", "11", "12"], { required_error: "Class is required" }),
-  board: z.enum(["CBSE", "ICSE", "State Board"], { required_error: "Board is required" }),
-  language: z.enum(["English", "Hindi", "Hinglish"], { required_error: "Language is required" }),
+  
+  // FIX: Changed { required_error: ... } to { message: ... }
+  grade: z.enum(["9", "10", "11", "12"], { message: "Class is required" }),
+  board: z.enum(["CBSE", "ICSE", "State Board"], { message: "Board is required" }),
+  language: z.enum(["English", "Hindi", "Hinglish"], { message: "Language is required" }),
 });
 
 // --- Step 2: Academic Details (Dynamic Schema) ---
 export const createAcademicSchema = (grade?: string) => {
   return z.object({
     subjects: z.array(z.string()), 
-    examGoal: z.enum(["Board Excellence", "Concept Mastery", "Competitive Prep"], { required_error: "Goal is required" }),
+    // FIX: Changed { required_error: ... } to { message: ... }
+    examGoal: z.enum(["Board Excellence", "Concept Mastery", "Competitive Prep"], { message: "Goal is required" }),
     studyHours: z.coerce.number().min(1, "At least 1 hour required").max(40, "Max 40 hours allowed"),
     isScholarship: z.boolean().default(false),
     lastExamScore: z.coerce.number().optional(),
@@ -64,8 +67,10 @@ export const addressSchema = z.object({
   address: z.string().min(10, "Address too short").max(120),
   guardianName: z.string().min(2, "Guardian name required"),
   guardianMobile: z.string().regex(/^[6-9]\d{9}$/, "Must be a valid Indian mobile number"),
-  paymentPlan: z.enum(["Quarterly", "Half-Yearly", "Annual"], { required_error: "Plan is required" }),
-  paymentMode: z.enum(["UPI", "Card", "NetBanking"], { required_error: "Mode is required" }),
+  
+  // FIX: Changed { required_error: ... } to { message: ... }
+  paymentPlan: z.enum(["Quarterly", "Half-Yearly", "Annual"], { message: "Plan is required" }),
+  paymentMode: z.enum(["UPI", "Card", "NetBanking"], { message: "Mode is required" }),
 });
 
 export type StudentData = z.infer<typeof studentSchema>;
