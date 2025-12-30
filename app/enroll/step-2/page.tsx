@@ -3,7 +3,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-// Import the factory function instead of the static object
 import { createAcademicSchema, AcademicData } from '@/lib/schemas';
 import { useEnrollmentStore } from '@/store/useEnrollmentStore';
 import { Button } from '@/components/ui/button';
@@ -32,8 +31,9 @@ export default function Step2() {
   // Create the schema memoized with the current grade
   const schema = useMemo(() => createAcademicSchema(formData.grade), [formData.grade]);
 
-  const form = useForm<AcademicData>({
-    resolver: zodResolver(schema), // Pass the dynamic schema here
+  // FIX: Remove <AcademicData> generic. Let RHF infer types from the resolver.
+  const form = useForm({
+    resolver: zodResolver(schema),
     defaultValues: {
       subjects: formData.subjects || [],
       examGoal: (formData.examGoal as any) || undefined,
@@ -66,7 +66,7 @@ export default function Step2() {
           name="subjects"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Subjects (Select Multiple)<span className="text-red-500">*</span></FormLabel>
+              <FormLabel>Subjects (Select Multiple)</FormLabel>
               <div className="flex flex-wrap gap-2 mb-2">
                 {availableSubjects.map((subject) => (
                   <Badge
@@ -76,7 +76,7 @@ export default function Step2() {
                     onClick={() => {
                       const current = field.value;
                       if (current.includes(subject)) {
-                        field.onChange(current.filter(s => s !== subject));
+                        field.onChange(current.filter((s: string) => s !== subject));
                       } else {
                         field.onChange([...current, subject]);
                       }
@@ -100,7 +100,7 @@ export default function Step2() {
             name="examGoal"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Exam Goal<span className="text-red-500">*</span></FormLabel>
+                <FormLabel>Exam Goal</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                    <FormControl><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger></FormControl>
                    <SelectContent>
@@ -117,7 +117,7 @@ export default function Step2() {
             name="studyHours"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Weekly Study Hours<span className="text-red-500">*</span></FormLabel>
+                <FormLabel>Weekly Study Hours</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
