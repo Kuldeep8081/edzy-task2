@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Edzy Student Enrollment Portal
 
-## Getting Started
+A robust, multi-step student enrollment flow built for the Edzy Frontend Hackathon (Task 2). This application features complex form handling, cross-step state persistence, dynamic validation, and a polished UI tailored for Indian students.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Multi-Step Wizard:** A guided 4-step process (Student -> Academic -> Address -> Review) with a visual progress indicator.
+- **State Persistence:** Form data is persisted to `localStorage` using **Zustand**, ensuring users don't lose progress on refresh.
+- **Robust Validation (Zod):** - **Indian Mobile Numbers:** Validates `+91` format and 10 digits.
+  - **PIN Code Logic:** Validates 6-digit Indian PIN codes.
+  - **Conditional Rules:** Enforces specific subject counts based on Grade (Class 10 vs 12) and requires exam scores only if "Scholarship" is selected.
+- **Smart Automation:** - **Mock PIN Lookup:** Automatically fills City and State when a valid PIN (e.g., `110001`, `400001`, `560001`) is entered.
+  - **Dynamic Subjects:** The subject list changes automatically based on the selected Class.
+- **Route Guards:** Prevents users from jumping to later steps without completing previous ones.
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 16 (App Router)](https://nextjs.org/) 
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS + [shadcn/ui](https://ui.shadcn.com/) 
+- **Form Management:** React Hook Form
+- **Validation:** Zod 
+- **State Management:** Zustand (with persist middleware) 
+- **Notifications:** Sonner (Toast)
+
+## ⚙️ Installation & Setup
+
+1. **Clone the repository:**
+   ```
+   git clone [https://github.com/your-username/edzy-enrollment.git](https://github.com/your-username/edzy-enrollment.git)
+   cd edzy-enrollment
+   ```
+2. **Install dependencies:**
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+npm install
+```
+3. **Run the development server:**
+   ```
+   npm run dev
+   ```
